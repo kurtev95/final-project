@@ -20,7 +20,9 @@ pipeline {
            steps {
                withSonarQubeEnv('Sq') {
                     sh '${scannerHome}/bin/sonar-scanner --version'
-                    sh './gradlew sonarqube'
+                    echo "-----------------------------------------------"
+                    sh '${scannerHome}/bin/sonar-scanner'
+//                     sh './gradlew sonarqube'
                }
            }
        }
