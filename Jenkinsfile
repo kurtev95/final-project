@@ -19,8 +19,7 @@ pipeline {
             }
            steps {
                withSonarQubeEnv('Sq') {
-                    echo '${scannerHome}/bin/sonar-scanner --version'
-                    echo "test 11 ${env.SONAR_HOST_URL}"
+                    sh '${scannerHome}/bin/sonar-scanner --version'
                     sh './gradlew sonarqube'
                }
            }
