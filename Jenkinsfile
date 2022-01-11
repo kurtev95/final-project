@@ -19,9 +19,7 @@ pipeline {
             }
            steps {
                withSonarQubeEnv('Sq') {
-                    sh '${scannerHome}/bin/sonar-scanner --version'
-                    echo "-----------------------------------------------"
-                    sh '${scannerHome}/bin/sonar-scanner'
+                    sh '${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=develop'
 //                     sh './gradlew sonarqube'
                }
            }
