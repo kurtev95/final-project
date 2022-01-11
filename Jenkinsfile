@@ -15,7 +15,7 @@ pipeline {
        stage('SonarQube analysis') {
            steps {
                withSonarQubeEnv('Sq') {
-                     sh './gradlew sonarqube -Dsonar.projectKey=develop'
+                     sh './gradlew sonarqube'
                }
            }
        }
