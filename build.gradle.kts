@@ -37,8 +37,15 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+	runtimeOnly("org.postgresql:postgresql")
+
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation("org.mockito:mockito-core:3.11.2")
+	testImplementation("org.mockito:mockito-inline:3.11.2")
+	testImplementation("com.nhaarman.mockitokotlin2", "mockito-kotlin", "2.2.0")
+	testImplementation("org.jetbrains.kotlin:kotlin-test:1.4.30")
+	testImplementation("org.jetbrains.kotlin:kotlin-test-junit:1.4.30")
 }
 
 tasks.withType<KotlinCompile> {
