@@ -23,23 +23,26 @@ pipeline {
 //                }
 //            }
 //        }
-      stage ('Build docker'){
-        steps{
-            sh 'docker build -t kurtev95/final-project:latest .'
-        }
-      }
-
       stage ('Login'){
         steps{
-            sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+          withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'password', usernameVariable: 'username')]) {
+              sh "docker login -u $username -p $password"
+          }
         }
       }
 
-      stage ('Push to DOCKER'){
-        steps{
-            sh 'docker push kurtev95/final-project:latest'
-        }
-      }
+//       stage ('Build docker'){
+//         steps{
+//             sh 'docker build -t kurtev95/final-project:latest .'
+//         }
+//       }
+//
+//
+//       stage ('Push to DOCKER'){
+//         steps{
+//             sh 'docker push kurtev95/final-project:latest'
+//         }
+//       }
 
 //       stage('Push and update container') {
 //
