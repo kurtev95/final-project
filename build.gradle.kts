@@ -2,6 +2,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 val postgreVersion by extra("42.2.17")
 
+val swaggerVersion by extra("2.9.2")
+
 buildscript {
 	dependencies {
 		classpath("org.jetbrains.kotlin:kotlin-noarg:1.4.30")
@@ -37,6 +39,8 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+	implementation("io.springfox", "springfox-swagger2", swaggerVersion)
+	implementation("io.springfox", "springfox-swagger-ui", swaggerVersion)
 	runtimeOnly("org.postgresql:postgresql")
 
 
@@ -47,6 +51,7 @@ dependencies {
 	testImplementation("org.jetbrains.kotlin:kotlin-test:1.4.30")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit:1.4.30")
 }
+
 
 tasks.withType<KotlinCompile> {
 	kotlinOptions {

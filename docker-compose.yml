@@ -41,7 +41,7 @@ services:
       - ~/sonar_data:/var/lib/postgresql/data
 
   db-project:
-    container_name: projetc-postgres
+    container_name: db-project
     image: postgres:13.2
     restart: always
     environment:
