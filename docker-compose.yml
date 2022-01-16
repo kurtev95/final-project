@@ -9,7 +9,7 @@ services:
       - "50000:50000"
     container_name: my-jenkins
     volumes:
-      - /jenkins_home:/var/jenkins_home
+      - jenkins_home:/var/jenkins_home
   sonarqube:
     image: sonarqube:8.5.1-community
     container_name: sonarqube
@@ -49,4 +49,8 @@ services:
       - ~/postgres-data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+
+volumes:
+  jenkins_home:
+    external: true
 
