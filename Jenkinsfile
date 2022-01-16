@@ -35,10 +35,9 @@ pipeline {
           withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'password', usernameVariable: 'username')]) {
               sh "docker login -u $username -p $password"
           }
-        }
-        steps{
-            sh 'docker push kurtev95/final-project:latest'
-        }
+
+             sh 'docker push kurtev95/final-project:latest'
+          }
       }
 
 //       stage('Push and update container') {
