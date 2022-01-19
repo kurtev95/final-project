@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-deployment
+  labels:
+    app: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:13.2
+          lifecycle:
+            postStart:
+              exec:
+                command: [ "/bin/bash","-c","sleep 20 && PGPASSWORD=$POSTGRES_PASSWORD psql project -U $POSTGRES_USER -c
+                 \'CREATE SCHEMA IF NOT EXISTS project; CREATE TABLE IF NOT EXISTS content_entity
+              (id  serial
+        constraint content_entity_pk
+        primary key,
+        content text);
+        alter table content_entity
+        owner to local;
+        create unique index content_entity_id_uindex
+        on content_entity (id);
+        \'" ]
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                   name: postgres-secret
+                   key: postgres-user
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                   name: postgres-secret
+                   key: postgres-password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-service
+spec:
+  selector:
+    app: postgres
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
+
+
+
