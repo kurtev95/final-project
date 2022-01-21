@@ -17,20 +17,6 @@ spec:
       containers:
         - name: postgres
           image: postgres:13.2
-          lifecycle:
-            postStart:
-              exec:
-                command: [ "/bin/bash","-c","sleep 20 && PGPASSWORD=$POSTGRES_PASSWORD psql project -U $POSTGRES_USER -c
-                 \'CREATE SCHEMA IF NOT EXISTS project; CREATE TABLE IF NOT EXISTS content_entity
-              (id  serial
-        constraint content_entity_pk
-        primary key,
-        content text);
-        alter table content_entity
-        owner to local;
-        create unique index content_entity_id_uindex
-        on content_entity (id);
-        \'" ]
           ports:
             - containerPort: 5432
           env:
@@ -44,18 +30,27 @@ spec:
                 secretKeyRef:
                    name: postgres-secret
                    key: postgres-password
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgres-data
+      volumes:
+        - name: postgres-data
+          persistentVolumeClaim:
+            claimName: postgres-volume
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: postgres-service
 spec:
+  type: NodePort
   selector:
     app: postgres
   ports:
     - protocol: TCP
       port: 5432
       targetPort: 5432
+      nodePort: 30101
 
 
 
