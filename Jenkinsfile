@@ -27,7 +27,7 @@ pipeline {
 
       stage ('Build docker image'){
         steps{
-            sh 'docker build -t kurtev95/final-project:latest .'
+            sh 'docker build -t kurtev95/final-project:1.0 .'
         }
       }
 
