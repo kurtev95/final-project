@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: application
-          image: kurtev95/final-project:latest
+          image: kurtev95/final-project:1.0
           ports:
             - containerPort: 8081
           env:
