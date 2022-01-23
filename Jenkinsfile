@@ -27,7 +27,7 @@ pipeline {
 
       stage ('Build docker image'){
         steps{
-            sh 'docker build -t kurtev95/final-project:1.0 .'
+            sh 'docker build -t kurtev95/final-project:2.0 .'
         }
       }
 
@@ -36,7 +36,7 @@ pipeline {
           withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'password', usernameVariable: 'username')]) {
               sh "docker login -u $username -p $password"
           }
-             sh 'docker push kurtev95/final-project:1.0'
+             sh 'docker push kurtev95/final-project:2.0'
           }
       }
     }

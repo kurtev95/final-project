@@ -16,6 +16,11 @@ class Controller(
         return "test"
     }
 
+    @GetMapping("/test")
+    fun getText1(): String {
+        return "test1"
+    }
+
     @GetMapping("/content/{id}")
     fun getContent(@PathVariable id: String): ContentEntity {
         return contentService.getById(id.toLong())
