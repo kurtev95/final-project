@@ -1,0 +1,43 @@
+We have spring boot application developed with Kotlin language and using MVC architecture(rest controller, service, repository)
+which is able to create and get entities from database.
+For database is used Postgres.
+Our Git repository is GitHub
+For CI tools is used Jenkins(PORT 8080) which is running in docker container into local machine.
+There is SAST tools - SonarQube(PORT 9000). Also running in docker container with his Postgres database instance in separate docker container as well.
+Our project is deployed in Kubernetes cluster which is run by Minikube(which is docker container as well).
+Using GitOps tool - ArgoCD (PORT 8083) which is also deployed in Kubernetes
+Jenkins, Sonarqube, Application, Postgres and database containers are described in docker-compose.yml
+-------------------------------------------------------------------------------------------------------------------------------------------
+CI/CD process:
+When the developer push his changes to git repository triggers webhook from Github which push notification to Jenkins instance.
+Because of our Jenkins is running locally I use tool Ngrok which expose our localhost to the public IP. Jenkins instance listens to port 8080.
+Jenkins has Gradle plugin which is our tool for building, testing, etc which follow to steps above ("Jenkins steps")
+Meanwhile ArgoCD is synced to git repository and polling for changes in application deployment resource only and if
+there is change it will apply the new version of our spring boot. All other k8 resources should be applied manually.
+-------------------------------------------------------------------------------------------------------------------------------------------
+Jenkins steps:
+1. Building project and check if there is issue through Gradle
+2. Executing unit tests for our service through Gradle as well
+3. Execute Sonarqube analyses for security issues (eg exposed secrets)
+4. Build docker image
+5. Login in docker hub and push build image
+All steps could be reviewed in Jenkinsfile
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+Kubernetes resources:
+1. Deployments for spring application and its postgres database
+2. Services for spring application(external - NodePort type PORT:30100) and its postgres database
+3. Persistent Volume(with host path approach which persist the data in minikube container) and Persistent Volume Claim for database deployment.
+This guarantees that storage is persistent when computer is rebooted or deployment/pods are deleted.
+4. Secret and config map
+5. Service account for using dashboard
+All resources could be reviewed in kubernetes folder
+
+
+This project has 2 environments until now: Local and Dev.
+This allows running dev env application(PORT 8081) and its db and local env(PORT 8082) in same time.
+
+TODO/
+1. adding monitoring and chatops tools
+2. Making docker image tag to be dynamic in Jenskinsfile and k8-application.yml. We need this because now the developer
+should change new docker image tag.
