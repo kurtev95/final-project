@@ -17,13 +17,13 @@ pipeline {
                    }
             }
 
-//        stage('SonarQube analysis') {
-//            steps {
-//                withSonarQubeEnv('Sq') {
-//                      sh './gradlew sonarqube'
-//                }
-//            }
-//        }
+       stage('SonarQube analysis') {
+           steps {
+               withSonarQubeEnv('Sq') {
+                     sh './gradlew sonarqube'
+               }
+           }
+       }
 
       stage ('Build docker image'){
         steps{
