@@ -2,6 +2,10 @@ pipeline {
 
     agent any
 
+    environment {
+            VERSION = 2.2
+    }
+
     stages {
         stage("Build") {
             steps {
@@ -27,7 +31,7 @@ pipeline {
 
       stage ('Build docker image'){
         steps{
-            sh 'docker build -t kurtev95/final-project:2.1 .'
+            sh 'docker build -t kurtev95/final-project:${VERSION}.'
         }
       }
 
@@ -36,7 +40,7 @@ pipeline {
           withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'password', usernameVariable: 'username')]) {
               sh "docker login -u $username -p $password"
           }
-             sh 'docker push kurtev95/final-project:2.0'
+             sh 'docker push kurtev95/final-project:${VERSION}'
           }
       }
     }
