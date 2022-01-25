@@ -3,7 +3,7 @@ pipeline {
     agent any
 
     environment {
-            VERSION = 2.2
+            VERSION = 2.3
     }
 
     stages {
@@ -31,7 +31,7 @@ pipeline {
 
       stage ('Build docker image'){
         steps{
-            sh 'docker build -t kurtev95/final-project:${VERSION}.'
+            sh 'docker build -t kurtev95/final-project:${VERSION} .'
         }
       }
 
