@@ -11,15 +11,12 @@ class Controller(
     val contentService: ContentService
 ) {
 
-    @GetMapping
-    fun getText(): String {
-        return "test"
-    }
-
-    @GetMapping("/test")
-    fun getText1(): String {
-        return "test1"
-    }
+//
+//    @GetMapping
+//    fun getText(): String {
+//        return "test"
+//    }
+//
 
     @GetMapping("/content/{id}")
     fun getContent(@PathVariable id: String): ContentEntity {
